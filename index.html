@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blockchain Pyramids | Practical Blockchain Consulting & Education – South Africa</title>
+  <meta name="description" content="Blockchain Pyramids helps South African businesses understand and implement blockchain where it creates real value — payments, supply chain, tokenization, compliance and AI automation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #C9A227;
+      --gold-light: #E8D48B;
+      --gold-dark: #A67C00;
+      --sand: #F5E6C8;
+      --sand-dark: #D4C4A0;
+      --stone: #4A4A4A;
+      --navy: #0B1120;
+      --navy-light: #1E293B;
+      --white: #FFFFFF;
+      --off-white: #FAF7F2;
+      --text: #1E293B;
+      --muted: #64748B;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--off-white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; line-height: 1.2; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.95rem 1.8rem; font-weight: 600; font-size: 1rem;
+      border-radius: 8px; border: none; cursor: pointer; transition: all 0.2s ease;
+    }
+    .btn-primary { background: var(--gold); color: var(--navy); }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(201,162,39,0.4); }
+    .btn-secondary { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.45); }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(11, 17, 32, 0.9); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,162,39,0.25);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 74px; }
+    .logo { display: flex; align-items: center; gap: 0.65rem; font-weight: 700; font-size: 1.2rem; color: var(--white); }
+    .logo-mark {
+      width: 34px; height: 34px;
+      background: linear-gradient(145deg, var(--gold), var(--gold-dark));
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .nav-links { display: none; align-items: center; gap: 2rem; }
+    @media (min-width: 768px) { .nav-links { display: flex; } }
+    .nav-links a { color: rgba(255,255,255,0.85); font-size: 0.95rem; font-weight: 500; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      position: relative; min-height: 100vh; display: flex; align-items: center;
+      color: var(--white); padding: 8rem 0 6rem; overflow: hidden;
+    }
+    .hero-bg-img {
+      position: absolute; inset: 0;
+      background: url('pyramids.jpg') center/cover no-repeat;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, rgba(11,17,32,0.92) 0%, rgba(11,17,32,0.78) 45%, rgba(11,17,32,0.55) 100%);
+      z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 680px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(201,162,39,0.18); border: 1px solid rgba(201,162,39,0.45);
+      color: var(--gold-light); padding: 0.4rem 1.1rem; border-radius: 100px;
+      font-size: 0.85rem; font-weight: 600; margin-bottom: 1.6rem;
+    }
+    .hero h1 { font-size: clamp(2.5rem, 5.5vw, 3.75rem); margin-bottom: 1.3rem; letter-spacing: -0.02em; }
+    .hero h1 span { color: var(--gold); }
+    .hero-sub { font-size: 1.2rem; color: rgba(255,255,255,0.88); margin-bottom: 2.4rem; max-width: 540px; line-height: 1.65; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3.2rem; }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 2.8rem; padding-top: 1.8rem; border-top: 1px solid rgba(255,255,255,0.15); }
+    .stat strong { display: block; font-size: 1.35rem; font-weight: 700; color: var(--gold); }
+    .stat span { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+
+    /* TRUST */
+    .trust { background: var(--navy); padding: 1.35rem 0; border-bottom: 1px solid rgba(201,162,39,0.2); }
+    .trust-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.5rem 3.2rem; color: rgba(255,255,255,0.75); font-size: 0.92rem; }
+    .trust-item { display: flex; align-items: center; gap: 0.5rem; }
+    .trust-item svg { color: var(--gold); flex-shrink: 0; }
+
+    /* COMMON */
+    section { padding: 5.5rem 0; }
+    .section-header { text-align: center; max-width: 620px; margin: 0 auto 3.5rem; }
+    .section-header h2 { font-size: clamp(1.9rem, 4vw, 2.55rem); margin-bottom: 1rem; color: var(--navy); }
+    .section-header p { color: var(--muted); font-size: 1.1rem; }
+    .label { display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem; }
+
+    /* PROBLEM */
+    .problem { background: var(--white); }
+    .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.4rem; }
+    .problem-card {
+      background: var(--off-white); border: 1px solid var(--sand-dark); border-radius: 12px;
+      padding: 1.7rem; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .problem-card:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(15,23,42,0.08); }
+    .problem-card h3 { font-size: 1.12rem; margin-bottom: 0.55rem; color: var(--navy); }
+    .problem-card p { color: var(--muted); font-size: 0.94rem; }
+
+    /* SERVICES */
+    .services { background: linear-gradient(180deg, var(--off-white) 0%, #F0E9DC 100%); }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.7rem; }
+    .service-card {
+      background: var(--white); border-radius: 14px; padding: 2rem;
+      border: 1px solid rgba(201,162,39,0.22); box-shadow: 0 4px 22px rgba(15,23,42,0.04);
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    }
+    .service-icon {
+      width: 48px; height: 48px; background: rgba(201,162,39,0.13); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; font-size: 1.35rem;
+    }
+    .service-card h3 { font-size: 1.25rem; margin-bottom: 0.7rem; color: var(--navy); }
+    .service-card p { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.2rem; }
+    .service-card ul { list-style: none; font-size: 0.9rem; color: var(--stone); }
+    .service-card li { padding: 0.28rem 0; padding-left: 1.15rem; position: relative; }
+    .service-card li::before { content: '▸'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+
+    /* USE CASES */
+    .use-cases { background: var(--navy); color: var(--white); }
+    .use-cases .section-header h2 { color: var(--white); }
+    .use-cases .section-header p { color: rgba(255,255,255,0.7); }
+    .use-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+    .use-card {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(201,162,39,0.28);
+      border-radius: 12px; padding: 1.5rem; transition: background 0.2s;
+    }
+    .use-card:hover { background: rgba(201,162,39,0.12); }
+    .use-card h3 { font-size: 1.08rem; margin-bottom: 0.5rem; color: var(--gold-light); }
+    .use-card p { font-size: 0.9rem; color: rgba(255,255,255,0.75); }
+
+    /* CREDENTIALS */
+    .credentials { background: var(--white); }
+    .cred-grid { display: grid; grid-template-columns: 1fr; gap: 2.2rem; align-items: center; }
+    @media (min-width: 768px) { .cred-grid { grid-template-columns: 1.1fr 0.9fr; } }
+    .cred-content h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--navy); }
+    .cred-content p { color: var(--muted); margin-bottom: 1.5rem; }
+    .cred-list { list-style: none; }
+    .cred-list li { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 1.05rem; font-size: 0.95rem; }
+    .cred-list .check {
+      flex-shrink: 0; width: 22px; height: 22px; background: var(--gold); color: var(--navy);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 700; margin-top: 2px;
+    }
+    .cred-box {
+      background: linear-gradient(145deg, var(--navy), #162033); color: var(--white);
+      border-radius: 16px; padding: 2.4rem; border: 1px solid rgba(201,162,39,0.3);
+    }
+    .cred-box h3 { font-size: 1.3rem; margin-bottom: 0.75rem; color: var(--gold); }
+    .cred-box p { font-size: 0.95rem; color: rgba(255,255,255,0.82); margin-bottom: 1.5rem; }
+    .cred-tag {
+      display: inline-block; background: rgba(201,162,39,0.2); color: var(--gold-light);
+      padding: 0.35rem 0.95rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+    }
+
+    /* PROCESS */
+    .process { background: var(--off-white); }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; counter-reset: step; }
+    .step {
+      background: var(--white); border-radius: 12px; padding: 1.8rem 1.6rem;
+      border: 1px solid var(--sand-dark); position: relative;
+    }
+    .step::before {
+      counter-increment: step; content: counter(step);
+      position: absolute; top: -15px; left: 1.4rem;
+      width: 32px; height: 32px; background: var(--gold); color: var(--navy);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.95rem;
+    }
+    .step h3 { margin-top: 0.7rem; margin-bottom: 0.5rem; font-size: 1.12rem; color: var(--navy); }
+    .step p { font-size: 0.9rem; color: var(--muted); }
+
+    /* FINAL CTA */
+    .final-cta {
+      background: linear-gradient(160deg, #0B1120 0%, #1E293B 100%);
+      color: var(--white); text-align: center; padding: 5.8rem 0; position: relative; overflow: hidden;
+    }
+    .final-cta::before {
+      content: ''; position: absolute; bottom: -25%; left: 50%; transform: translateX(-50%);
+      width: 90%; height: 65%;
+      background: radial-gradient(ellipse, rgba(201,162,39,0.18), transparent 70%);
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .final-cta h2 { font-size: clamp(1.95rem, 4vw, 2.7rem); margin-bottom: 1rem; position: relative; }
+    .final-cta > .container > p {
+      color: rgba(255,255,255,0.82); max-width: 520px; margin: 0 auto 2.2rem;
+      position: relative; font-size: 1.12rem;
+    }
+
+    .lead-form { display: flex; flex-direction: column; gap: 0.75rem; max-width: 400px; margin: 0 auto; position: relative; }
+    .lead-form input, .lead-form select {
+      padding: 0.9rem 1.1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08); color: white; font-size: 1rem;
+    }
+    .lead-form input::placeholder { color: rgba(255,255,255,0.5); }
+    .lead-form input:focus, .lead-form select:focus { outline: none; border-color: var(--gold); }
+    .lead-form select option { background: #1E293B; color: white; }
+
+    /* FOOTER */
+    footer { background: #070B14; color: rgba(255,255,255,0.6); padding: 3.2rem 0 2rem; font-size: 0.9rem; }
+    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2.2rem; margin-bottom: 2.2rem; }
+    .footer-brand .logo { margin-bottom: 0.8rem; }
+    .footer-brand p { max-width: 290px; line-height: 1.55; }
+    .footer-links { display: flex; gap: 3.2rem; }
+    .footer-col h4 { color: var(--white); font-size: 0.95rem; margin-bottom: 0.8rem; font-weight: 600; }
+    .footer-col a { display: block; margin-bottom: 0.4rem; color: rgba(255,255,255,0.6); transition: color 0.15s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; text-align: center; font-size: 0.85rem; }
+
+    @media (max-width: 767px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark"></div>
+        <span>Blockchain Pyramids</span>
+      </a>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#credentials">Why Us</a>
+        <a href="#process">Process</a>
+        <a href="#contact" class="btn btn-primary" style="padding: 0.55rem 1.15rem; font-size: 0.9rem;">Book a Call</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-img"></div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>◆</span> Blockchain Consulting & Education · South Africa
+        </div>
+        <h1>Built to Last.<br><span>Practical Blockchain.</span></h1>
+        <p class="hero-sub">
+          We help South African businesses cut through the noise and implement blockchain where it creates measurable value — payments, supply-chain provenance, tokenization, compliance and AI automation.
+        </p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-primary">Book a Free Discovery Call</a>
+          <a href="#services" class="btn btn-secondary">Explore Services</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <strong>Education-First</strong>
+            <span>We teach before we sell</span>
+          </div>
+          <div class="stat">
+            <strong>Industry Trained</strong>
+            <span>Binance · Cardano & more</span>
+          </div>
+          <div class="stat">
+            <strong>SA Focused</strong>
+            <span>Local use cases & clear ROI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <div class="trust">
+    <div class="container trust-inner">
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        Continuous research & development
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        Education-first approach
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        Practical delivery with available resources
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="problem" id="problem">
+    <div class="container">
+      <div class="section-header">
+        <div class="label">The Reality</div>
+        <h2>Most blockchain conversations stay in the clouds</h2>
+        <p>Businesses hear the hype but struggle to see clear, local ROI or a realistic path to implementation.</p>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-card">
+          <h3>Hype vs Reality Gap</h3>
+          <p>Teams know blockchain exists but lack a clear picture of which problems it actually solves in their operations or industry.</p>
+        </div>
+        <div class="problem-card">
+          <h3>Compliance & Risk Uncertainty</h3>
+          <p>Especially around crypto assets, FSCA requirements and data handling — many prefer to wait rather than move incorrectly.</p>
+        </div>
+        <div class="problem-card">
+          <h3>Skills Shortage</h3>
+          <p>Internal teams often lack practical blockchain knowledge. Training providers and enterprises need structured upskilling.</p>
+        </div>
+        <div class="problem-card">
+          <h3>Integration Complexity</h3>
+          <p>Connecting blockchain to existing systems (payments, ERP, logistics, property platforms) feels expensive and risky without guidance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <div class="label">What We Deliver</div>
+        <h2>Consulting that starts with understanding</h2>
+        <p>We teach, assess and implement — using the resources and expertise we have available today. No over-promising.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">📚</div>
+          <h3>Education & Workshops</h3>
+          <p>Executive briefings and practical workshops that cut through hype and focus on real South African use cases and ROI.</p>
+          <ul>
+            <li>Half-day / full-day sessions</li>
+            <li>Custom content for your industry</li>
+            <li>Team upskilling programmes</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔍</div>
+          <h3>Opportunity Assessment</h3>
+          <p>We evaluate where blockchain (and AI + blockchain) can reduce cost, open revenue, or improve compliance in your specific context.</p>
+          <ul>
+            <li>Use-case prioritisation</li>
+            <li>Technical & regulatory feasibility</li>
+            <li>Clear ROI framing</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">⚙️</div>
+          <h3>Implementation Support</h3>
+          <p>From scoping to light delivery and vendor coordination — we help turn validated ideas into working pilots or production components.</p>
+          <ul>
+            <li>Smart contract scoping</li>
+            <li>Integration advice</li>
+            <li>Pilot design & oversight</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section class="use-cases" id="use-cases">
+    <div class="container">
+      <div class="section-header">
+        <div class="label">Where Value Appears</div>
+        <h2>Target applications in South Africa</h2>
+        <p>We focus on sectors and problems where blockchain already shows measurable demand.</p>
+      </div>
+      <div class="use-grid">
+        <div class="use-card">
+          <h3>Payments & Fintech</h3>
+          <p>Stablecoin rails, cross-border efficiency, settlement transparency and new payment products.</p>
+        </div>
+        <div class="use-card">
+          <h3>Supply Chain Provenance</h3>
+          <p>Agriculture and mining — ethical sourcing, traceability, ESG data and export documentation.</p>
+        </div>
+        <div class="use-card">
+          <h3>Tokenization</h3>
+          <p>Property platforms, RWAs, digital certificates and asset representations that need clear legal and technical foundations.</p>
+        </div>
+        <div class="use-card">
+          <h3>Compliance & Reporting</h3>
+          <p>Audit trails, regulatory readiness and verifiable records that reduce friction with auditors and partners.</p>
+        </div>
+        <div class="use-card">
+          <h3>Skills & Training Providers</h3>
+          <p>Curriculum design, workshop delivery and capability building for SETAs, academies and corporate L&D teams.</p>
+        </div>
+        <div class="use-card">
+          <h3>AI + Blockchain Automation</h3>
+          <p>Where intelligent agents meet verifiable data and automated execution — practical hybrid solutions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDENTIALS -->
+  <section class="credentials" id="credentials">
+    <div class="container">
+      <div class="cred-grid">
+        <div class="cred-content">
+          <div class="label">Credibility</div>
+          <h2>Built on continuous learning and solid foundations</h2>
+          <p>We do not claim to have every answer. We stay current, research actively, and deliver what our current resources allow — honestly.</p>
+          <ul class="cred-list">
+            <li>
+              <span class="check">✓</span>
+              <span><strong>Research Focused</strong> — Deep Dive into Blockchain programmes covering technology, economics and law.</span>
+            </li>
+            <li>
+              <span class="check">✓</span>
+              <span>Multiple industry platform courses completed (Binance, Cardano and others) with ongoing learning.</span>
+            </li>
+            <li>
+              <span class="check">✓</span>
+              <span>Active research & development posture — we continuously update our knowledge and approaches.</span>
+            </li>
+            <li>
+              <span class="check">✓</span>
+              <span>Education-first sales motion: we teach before we sell, so clients understand the real value.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="cred-box">
+          <h3>Our Working Principle</h3>
+          <p>We serve what we can build and deliver well with the resources we have today. That means clear scope, honest timelines, and solutions that fit your actual constraints — not theoretical perfection.</p>
+          <span class="cred-tag">Practical · Transparent · Locally Relevant</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-header">
+        <div class="label">How We Work</div>
+        <h2>From conversation to clear next steps</h2>
+        <p>Simple, low-friction process designed for busy decision-makers.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3>Discovery Call</h3>
+          <p>30-minute conversation to understand your context, goals and current challenges. No hard sell.</p>
+        </div>
+        <div class="step">
+          <h3>Opportunity Mapping</h3>
+          <p>We identify the highest-leverage blockchain or hybrid use cases relevant to your business and market.</p>
+        </div>
+        <div class="step">
+          <h3>Education or Assessment</h3>
+          <p>Workshop, briefing or formal assessment — so your team and leadership share a common, realistic understanding.</p>
+        </div>
+        <div class="step">
+          <h3>Scoped Delivery</h3>
+          <p>Pilot design, implementation support or ongoing advisory — delivered within agreed resources and budget.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta" id="contact">
+    <div class="container">
+      <h2>Ready to build on solid ground?</h2>
+      <p>Book a free discovery call. We’ll listen first, then show you where blockchain can realistically create value for your organisation in South Africa.</p>
+      
+      <form class="lead-form" action="https://formsubmit.co/neo.amodibedi@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New Discovery Call Request – Blockchain Pyramids">
+        <input type="hidden" name="_captcha" value="false">
+        
+        <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Work email" required />
+        <input type="text" name="company" placeholder="Company" />
+        
+        <select name="interest" required>
+          <option value="" disabled selected>What are you most interested in?</option>
+          <option>Workshop / Education session</option>
+          <option>Opportunity assessment</option>
+          <option>Implementation support</option>
+          <option>General discussion</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">
+          Request Discovery Call
+        </button>
+      </form>
+
+      <p style="margin-top:1.6rem; font-size:0.9rem; color:rgba(255,255,255,0.6); position:relative;">
+        Or message us directly on WhatsApp (0609601294) / LinkedIn
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-mark"></div>
+            <span>Blockchain Pyramids</span>
+          </a>
+          <p>Practical blockchain consulting and education for South African businesses. Solid foundations. Real results.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Services</h4>
+            <a href="#services">Workshops</a>
+            <a href="#services">Assessments</a>
+            <a href="#services">Implementation</a>
+          </div>
+          <div class="footer-col">
+            <h4>Focus Areas</h4>
+            <a href="#use-cases">Payments & Fintech</a>
+            <a href="#use-cases">Supply Chain</a>
+            <a href="#use-cases">Tokenization</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2026 Blockchain Pyramids. Built for lasting value. · South Africa
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
